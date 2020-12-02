@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { inspect } from 'util';
 import { useCharacter } from '../hooks/use-character';
 import './spritesheet-animator-page.css';
 
@@ -22,7 +21,7 @@ const SpritesheetAnimatorPage: React.FC = () => {
                     {!isPending && !error && <pre>{JSON.stringify(value, null, 4)}</pre>}
                     {error && <p className="error">{JSON.stringify(error)}</p>}
                 </div>
-                <img src={value?.spritesheetUrl}></img>
+                <img alt={value?.name} src={value?.spritesheetUrl}></img>
                 {!isPending && !error && <pre>{new XMLSerializer().serializeToString(value?.texAtlas as Node)}</pre>}
             </section>
         </main>
