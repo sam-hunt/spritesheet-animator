@@ -1,8 +1,9 @@
 import * as React from 'react';
 
-export type UsePromiseState<T> = { value: T | null, error: unknown | null, isPending: boolean };
+type UsePromiseState<T> = { value: T | null, error: unknown | null, isPending: boolean };
+export type UsePromise<T> = [T | null, Error | unknown | null, boolean];
 
-export function usePromise<T>(promiseOrFunction: Promise<T> | Function, defaultValue: T): UsePromiseState<T> {
+export function usePromise<T>(promiseOrFunction: Promise<T> | Function, defaultValue: T): UsePromise<T> {
     const [state, setState] = React.useState<UsePromiseState<T>>({ value: defaultValue, error: null, isPending: true })
 
     React.useEffect(() => {
@@ -19,5 +20,5 @@ export function usePromise<T>(promiseOrFunction: Promise<T> | Function, defaultV
     }, [promiseOrFunction, defaultValue]);
 
     const { value, error, isPending } = state;
-    return { value, error, isPending };
+    return [value, error, isPending];
 }

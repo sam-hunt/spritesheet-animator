@@ -7,22 +7,22 @@ const characters = ['Robot', 'Female Adventurer', 'Female Person', 'Male Person'
 const SpritesheetAnimatorPage: React.FC = () => {
     const [name, setName] = React.useState<string>(characters[0]);
 
-    const { value, error, isPending } = useCharacter(name);
+    const [character, characterError, characterPending] = useCharacter(name);
 
     return (
         <main>
             <h1>Spritesheet Animator</h1>
             <section>
-                <select name="from" id="from" defaultValue="" onChange={(e) => setName(e.target.value)}>
+                <select name="select-character" id="select-character" defaultValue="" onChange={e => setName(e.target.value)}>
                     {characters.map(c => <option value={c} key={c}>{c}</option>)} 
                 </select>
                 <div>
-                    {isPending && <p className="loading">loading...</p>}
-                    {!isPending && !error && <pre>{JSON.stringify(value, null, 4)}</pre>}
-                    {error && <p className="error">{JSON.stringify(error)}</p>}
+                    {characterPending && <p className="loading">loading...</p>}
+                    {!characterPending && !characterError && <pre>{JSON.stringify(character, null, 4)}</pre>}
+                    {characterError && <p className="characterError">{JSON.stringify(characterError)}</p>}
                 </div>
-                <img alt={value?.name} src={value?.spritesheetUrl}></img>
-                {!isPending && !error && <pre>{new XMLSerializer().serializeToString(value?.texAtlas as Node)}</pre>}
+                <img alt={character?.name} src={character?.spritesheetUrl}></img>
+                {!characterPending && !characterError && <pre>{new XMLSerializer().serializeToString(character?.texAtlas as Node)}</pre>}
             </section>
         </main>
     );

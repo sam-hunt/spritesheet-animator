@@ -1,5 +1,5 @@
 import { ICharacter } from '../spritesheet-animator-page/character.interface';
-import { usePromise, UsePromiseState } from './use-promise';
+import { usePromise, UsePromise } from './use-promise';
 
 const toSlug = (s: string) => s.toLowerCase().replace(/\s/, '-');
 const characterPath = (c: string) => `/assets/kenney_tooncharacters1/${toSlug(c)}/character_${toSlug(c)}_sheetHD`;
@@ -12,4 +12,4 @@ const fetchCharacter = async (name: string): Promise<ICharacter | null> => {
         .then(([spritesheet, texAtlas]) => ({ name, spritesheet, spritesheetUrl, texAtlas, texAtlasUrl }));
 };
 
-export const useCharacter = (name: string): UsePromiseState<ICharacter | null> => usePromise(fetchCharacter(name), null);
+export const useCharacter = (name: string): UsePromise<ICharacter> => usePromise(fetchCharacter(name), null);
